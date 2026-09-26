@@ -1,0 +1,541 @@
+/* =====================================================================
+   Bloom Landing Page v2 — Stylesheet
+   Page-specific layout, section compositions, and interactive states.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   1. Site Header
+   --------------------------------------------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: hsl(var(--background) / .75);
+  transition: background-color var(--dur-2), border-color var(--dur-2), backdrop-filter var(--dur-2);
+}
+.site-header.is-scrolled {
+  background: hsl(var(--background) / .92);
+  backdrop-filter: blur(12px) saturate(1.2);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  border-block-end: 1px solid hsl(var(--border));
+  box-shadow: 0 1px 3px hsl(var(--foreground) / .03);
+}
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  block-size: 4rem;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+.nav-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: .5rem .75rem;
+  color: hsl(var(--muted-foreground));
+  font-size: var(--text-sm);
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: color var(--dur-2), background-color var(--dur-2);
+}
+.nav-item:hover {
+  color: hsl(var(--foreground));
+  background: hsl(var(--muted) / .6);
+}
+.nav-item[aria-current="true"] {
+  color: hsl(var(--foreground));
+}
+.nav-item[aria-current="true"]::after {
+  content: "";
+  position: absolute;
+  inset-inline: .75rem;
+  inset-block-end: .125rem;
+  block-size: 2px;
+  background: hsl(var(--brand));
+  border-radius: var(--radius-full);
+}
+
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.menu-toggle {
+  display: none;
+}
+
+@media (max-width: 960px) {
+  .site-nav, .nav-cta { display: none; }
+  .menu-toggle { display: inline-flex; }
+}
+
+/* Mobile Nav Drawer */
+.mobile-nav {
+  border-block-end: 1px solid hsl(var(--border));
+  background: hsl(var(--card));
+  box-shadow: var(--shadow-lg);
+  animation: slide-down var(--dur-2) var(--ease-out);
+}
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.mobile-nav__inner {
+  padding-block: var(--space-4);
+}
+.mobile-nav__link {
+  display: flex;
+  align-items: center;
+  padding: .625rem .75rem;
+  color: hsl(var(--muted-foreground));
+  font-size: var(--text-base);
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: background-color var(--dur-1), color var(--dur-1);
+}
+.mobile-nav__link:hover, .mobile-nav__link[aria-current="true"] {
+  color: hsl(var(--foreground));
+  background: hsl(var(--muted));
+}
+
+/* ---------------------------------------------------------------------
+   2. Hero Section
+   --------------------------------------------------------------------- */
+.hero {
+  padding-block-start: clamp(2rem, 1.5rem + 3vw, 4rem);
+  padding-block-end: clamp(2.5rem, 2rem + 4vw, 5rem);
+}
+.hero__title {
+  text-wrap: balance;
+  max-inline-size: 19ch;
+  margin-inline: auto;
+}
+.hero__lede {
+  text-wrap: balance;
+  max-inline-size: 54ch;
+  margin-inline: auto;
+}
+.hero__form-wrap {
+  inline-size: 100%;
+  max-inline-size: 28rem;
+  margin-inline: auto;
+}
+.hero__trust {
+  font-size: var(--text-sm);
+  color: hsl(var(--muted-foreground));
+}
+
+@media (max-width: 520px) {
+  .hero__form-wrap .input-group {
+    flex-direction: column;
+    align-items: stretch;
+    background: transparent;
+    border: none;
+    padding: 0;
+    gap: .5rem;
+    box-shadow: none;
+  }
+  .hero__form-wrap .input-group:focus-within {
+    box-shadow: none;
+  }
+  .hero__form-wrap .input-bare {
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--input));
+    border-radius: var(--radius-md);
+    padding: .75rem 1rem;
+    inline-size: 100%;
+  }
+  .hero__form-wrap .input-bare:focus {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+  .hero__form-wrap .btn {
+    inline-size: 100%;
+    justify-content: center;
+    border-radius: var(--radius-md);
+  }
+}
+
+/* Hero Preview Window */
+.hero-window {
+  inline-size: 100%;
+  max-inline-size: 1140px;
+  margin-block-start: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+  border: 1px solid hsl(var(--border-strong));
+  box-shadow: var(--shadow-xl);
+  text-align: start;
+}
+.hero-mock {
+  display: flex;
+  min-block-size: 440px;
+  background: hsl(var(--card));
+}
+.hero-mock__sidebar {
+  inline-size: 210px;
+  flex: none;
+  padding: 1.25rem 1rem;
+  border-inline-end: 1px solid hsl(var(--border));
+  background: hsl(var(--card));
+  display: flex;
+  flex-direction: column;
+}
+.hero-mock__brand {
+  gap: .5rem;
+}
+.hero-mock__sidebar-foot {
+  margin-block-start: auto;
+  padding-block-start: 1rem;
+  border-block-start: 1px solid hsl(var(--border));
+}
+.hero-mock__main {
+  flex: 1;
+  min-inline-size: 0;
+  padding: 1.75rem clamp(1rem, 2vw, 2rem);
+  background: hsl(var(--card));
+}
+.hero-mock__letter {
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: hsl(var(--foreground));
+}
+.hero-mock__letter em {
+  font-style: italic;
+  color: hsl(var(--terra-ink));
+}
+.hero-mock__rail {
+  inline-size: 270px;
+  flex: none;
+  padding: 1.5rem 1.25rem;
+  border-inline-start: 1px solid hsl(var(--border));
+  background: hsl(var(--muted) / .25);
+}
+
+@media (max-width: 1080px) {
+  .hero-mock__rail { display: none; }
+}
+@media (max-width: 820px) {
+  .hero-mock__sidebar { display: none; }
+  .hero-mock__main { padding: 1.25rem 1rem; }
+}
+
+/* ---------------------------------------------------------------------
+   3. The Problem Section
+   --------------------------------------------------------------------- */
+.problem-grid {
+  gap: var(--space-8);
+}
+.problem-col {
+  position: relative;
+  padding-block-start: .5rem;
+}
+.problem-num {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 2rem + 1vw, 3rem);
+  line-height: 1;
+  color: hsl(var(--sage));
+  font-weight: 400;
+  letter-spacing: -.02em;
+}
+.ebbinghaus-card {
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  overflow: hidden;
+}
+.ebbinghaus-svg {
+  inline-size: 100%;
+  max-block-size: 180px;
+  display: block;
+}
+
+/* ---------------------------------------------------------------------
+   4. How It Works
+   --------------------------------------------------------------------- */
+.how-grid {
+  gap: var(--space-6);
+}
+.how-card {
+  position: relative;
+}
+.how-step-badge {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: hsl(var(--sage-ink));
+}
+.chip-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  align-items: center;
+}
+
+/* ---------------------------------------------------------------------
+   5. Ask Section (Interactive)
+   --------------------------------------------------------------------- */
+.ask-window {
+  box-shadow: var(--shadow-lg);
+  inline-size: 100%;
+}
+.ask-tabs {
+  padding-block-end: .5rem;
+  border-block-end: 1px solid hsl(var(--border));
+}
+.ask-tabs .chip--interactive.is-active {
+  background: hsl(var(--brand));
+  color: hsl(var(--brand-foreground));
+  border-color: hsl(var(--brand));
+}
+.ask-typing {
+  display: flex;
+  align-items: center;
+  padding: .75rem 0;
+}
+.ask-sources {
+  margin-block-start: .5rem;
+}
+.ask-sources .source {
+  transition: transform var(--dur-2), border-color var(--dur-2), background-color var(--dur-2);
+}
+.ask-sources .source:hover,
+.ask-sources .source:focus-visible,
+.ask-sources .source.is-cited {
+  border-color: hsl(var(--sage));
+  background: hsl(var(--sage-tint) / .4);
+}
+.ask-sources .source.is-pulse {
+  animation: pulse-border .6s var(--ease-out);
+}
+@keyframes pulse-border {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 hsl(var(--brand) / .4); }
+  50% { transform: scale(1.01); box-shadow: 0 0 0 4px hsl(var(--brand) / .25); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 hsl(var(--brand) / 0); }
+}
+
+/* ---------------------------------------------------------------------
+   6. Library & Graph
+   --------------------------------------------------------------------- */
+.graph-card {
+  background: hsl(var(--card));
+  overflow: hidden;
+}
+.graph-wrap {
+  inline-size: 100%;
+  max-inline-size: 540px;
+  margin-inline: auto;
+}
+.graph {
+  inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 540 / 320;
+}
+.graph__node {
+  cursor: pointer;
+  outline: none;
+  transition: transform var(--dur-2) var(--ease-spring), opacity var(--dur-2);
+}
+.graph__node:hover, .graph__node:focus-visible {
+  transform: scale(1.12);
+  transform-origin: center;
+}
+.graph.has-focus .graph__node {
+  opacity: .35;
+}
+.graph.has-focus .graph__node.is-active,
+.graph.has-focus .graph__node.is-related {
+  opacity: 1;
+}
+.graph.has-focus .graph__edges line {
+  opacity: .15;
+}
+.graph.has-focus .graph__edges line.is-related {
+  opacity: 1;
+  stroke: hsl(var(--brand));
+  stroke-width: 2.2;
+}
+
+.concept-mock {
+  background: hsl(var(--card));
+}
+
+/* ---------------------------------------------------------------------
+   7. The Mirror
+   --------------------------------------------------------------------- */
+.said-vs-did {
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+}
+.meter-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-block: .25rem;
+}
+.legend-dot {
+  display: inline-block;
+  inline-size: .625rem;
+  block-size: .625rem;
+  border-radius: var(--radius-full);
+}
+
+/* ---------------------------------------------------------------------
+   8. Practice & Flashcard
+   --------------------------------------------------------------------- */
+.practice-grid {
+  align-items: stretch;
+}
+.practice-flashcard-wrap {
+  background: hsl(var(--card));
+}
+.flashcard {
+  perspective: 1000px;
+  min-block-size: 260px;
+  outline: none;
+}
+.flashcard__inner {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: 260px;
+  transition: transform .45s cubic-bezier(.4, 0, .2, 1);
+  transform-style: preserve-3d;
+}
+.flashcard.is-flipped .flashcard__inner {
+  transform: rotateY(180deg);
+}
+.flashcard__face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background: hsl(var(--background));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+.flashcard__face--back {
+  transform: rotateY(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flashcard__inner {
+    transition: none !important;
+  }
+  .flashcard.is-flipped .flashcard__face--front {
+    display: none;
+  }
+  .flashcard:not(.is-flipped) .flashcard__face--back {
+    display: none;
+  }
+  .flashcard__face--back {
+    transform: none;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   9. Privacy Band
+   --------------------------------------------------------------------- */
+#privacy {
+  padding-block: clamp(3rem, 2.5rem + 3vw, 5rem);
+}
+.privacy-grid {
+  gap: var(--space-8) var(--space-6);
+}
+
+/* ---------------------------------------------------------------------
+   10. Science & FAQ
+   --------------------------------------------------------------------- */
+.science-grid {
+  gap: var(--space-6);
+}
+
+.faq-list {
+  inline-size: 100%;
+}
+.faq-item {
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--card));
+  transition: border-color var(--dur-2);
+}
+.faq-item[open] {
+  border-color: hsl(var(--border-strong));
+}
+.faq-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 500;
+  color: hsl(var(--foreground));
+  user-select: none;
+}
+.faq-summary::-webkit-details-marker {
+  display: none;
+}
+.faq-chevron {
+  flex: none;
+  color: hsl(var(--muted-foreground));
+  transition: transform var(--dur-2) var(--ease-out);
+}
+.faq-item[open] .faq-chevron {
+  transform: rotate(180deg);
+}
+.faq-answer {
+  line-height: 1.6;
+}
+
+/* ---------------------------------------------------------------------
+   11. Principles Strip
+   --------------------------------------------------------------------- */
+.principles-grid {
+  gap: var(--space-6);
+}
+
+/* ---------------------------------------------------------------------
+   12. Footer
+   --------------------------------------------------------------------- */
+.site-footer {
+  padding-block: 3rem 2rem;
+  border-block-start: 1px solid hsl(var(--border));
+  background: hsl(var(--card));
+}
+.footer-links a:hover {
+  color: hsl(var(--foreground));
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+
+/* ---------------------------------------------------------------------
+   13. Reveal Animation Support
+   --------------------------------------------------------------------- */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity var(--dur-3) var(--ease-out), transform var(--dur-3) var(--ease-out);
+}
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
